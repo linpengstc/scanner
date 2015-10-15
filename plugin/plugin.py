@@ -5,5 +5,9 @@ sys.path.append("..")
 
 class Plugin():
 
-	def exploit(url):
+	def exploit(self,url):
 		print "Plugin Exploit"
+	def help(self):
+		print "there is no help"
+
+print len("Administrators")
