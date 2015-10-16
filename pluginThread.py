@@ -11,18 +11,18 @@ import plugin
 from util.pluginUtil import *
 
 class PluginThread(threading.Thread):
-
-	def __init__(self,pluginName,threads,url):
+	#args转换为args,args包含args
+	def __init__(self,pluginName,threads,args):
 		super(PluginThread,self).__init__()
 		self.pluginName = pluginName
 		self.plugin = createPluginClazz(pluginName)
 		self.threads = threads
-		self.url = url
+		self.args = args
 	def run(self):
 		# 运行时创建对象
 		for d in self.plugin.dependencies:
 			self.threads[d].join()
-		self.plugin(self.url).exploit()
+		self.plugin(**self.args).exploit()
 
 	def getName(self):
 		return self.name

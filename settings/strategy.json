@@ -1,0 +1,9 @@
+{
+	"WeakPass":{
+		"url":"http://localhost/ecshop/admin/privilege.php",
+		"data":"username=_username&password=_password&act=signin",
+		"proto":"http://api.ecshop.com/record.php",
+		"userfile":"usr.txt",
+		"passfile":"pwd.txt"
+	}
+}
